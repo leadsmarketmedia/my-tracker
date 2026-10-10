@@ -1,30 +1,27 @@
 export default function handler(req, res) {
-  // 1. Get campaign code and worker token from incoming URL parameters
-  const { w } = req.query;
+  // 1. Get tracking parameter (fbclickid or w)
+  const { fbclickid, w } = req.query;
+  const workerToken = fbclickid || w || '1';
 
-  // 2. Your master account tracking link
+  // 2. Your destination offer link
   const masterOffer = 'http://www.td3j0sk.com/2LZW4TBP/M5C44N7/';
-  const workerToken = w || 'default_worker';
-
-  // 3. Attach worker sub-id for attribution tracking
   const finalRedirectUrl = `${masterOffer}?subid=${encodeURIComponent(workerToken)}`;
 
-  // 4. Return transition HTML that strips hostile referrer headers
+  // 3. HTML transition that strips referrer and redirects
   const html = `
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="UTF-8">
       <meta name="referrer" content="no-referrer">
+      <meta http-equiv="refresh" content="0;url=${finalRedirectUrl}">
       <title>Redirecting...</title>
       <script>
-        setTimeout(function() {
-          window.location.href = "${finalRedirectUrl}";
-        }, 200);
+        window.location.replace("${finalRedirectUrl}");
       </script>
     </head>
     <body style="background:#f4f4f4; text-align:center; padding-top:20%; font-family:sans-serif;">
-      <p>Loading secure endpoint...</p>
+      <p>Redirecting to offer...</p>
     </body>
     </html>
   `;

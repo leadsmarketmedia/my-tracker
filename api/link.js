@@ -3,7 +3,7 @@ export default function handler(req, res) {
   const { w } = req.query;
 
   // 2. Your master account tracking link
-  const masterOffer = 'https://www.td3j0sk.com/2LZW4TBP/M5C44N7/';
+  const masterOffer = 'http://www.td3j0sk.com/2LZW4TBP/M5C44N7/';
   const workerToken = w || 'default_worker';
 
   // 3. Attach worker sub-id for attribution tracking
